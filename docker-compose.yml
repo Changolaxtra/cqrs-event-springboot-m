@@ -7,15 +7,11 @@ services:
       - '8024:8024'
       - '8124:8124'
       - '8224:8224'
-    networks:
-      - cqrs-network
   mongodb:
     image: 'mongo:latest'
     hostname: 'mongo-server'
     ports:
       - '27017:27017'
-    networks:
-      - cqrs-network
   mysql:
     image: mysql:5.7.38
     hostname: mysql-server
@@ -26,8 +22,3 @@ services:
       - MYSQL_USER=admin
       - MYSQL_PASSWORD=admin
       - MYSQL_DATABASE=basic_db
-    networks:
-      - cqrs-network
-networks:
-  cqrs-network:
-    driver: bridge

@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.dan.bank</groupId>
 	<artifactId>user.cmd.api</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>user.cmd.api</name>
 	<description>User Command API Project</description>
 	<properties>
@@ -21,6 +21,11 @@
 			<groupId>com.dan.bank</groupId>
 			<artifactId>user.core</artifactId>
 			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.axonframework</groupId>
+			<artifactId>axon-spring-boot-starter</artifactId>
+			<version>4.6.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

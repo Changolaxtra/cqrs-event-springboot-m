@@ -1,10 +1,10 @@
-package com.dan.bank.user.query.api;
+package com.dan.bank.user.cmd.api;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ApplicationTests {
+class UserCommandApplicationTests {
 
 	@Test
 	void contextLoads() {
