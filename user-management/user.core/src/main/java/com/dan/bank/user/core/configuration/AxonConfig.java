@@ -1,6 +1,7 @@
 package com.dan.bank.user.core.configuration;
 
 import com.mongodb.client.MongoClient;
+import com.thoughtworks.xstream.XStream;
 import org.axonframework.eventhandling.tokenstore.TokenStore;
 import org.axonframework.eventsourcing.eventstore.EmbeddedEventStore;
 import org.axonframework.eventsourcing.eventstore.EventStorageEngine;
@@ -51,6 +52,13 @@ public class AxonConfig {
                 .storageEngine(eventStorageEngine)
                 .messageMonitor(metricRegistry.registerEventBus("eventStore"))
                 .build();
+    }
+
+    @Bean
+    public XStream xStream() {
+        final XStream xStream = new XStream();
+        xStream.allowTypesByWildcard(new String[] { "com.dan.bank.**" });
+        return xStream;
     }
 
 }
