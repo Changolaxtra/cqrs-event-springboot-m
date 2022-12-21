@@ -10,7 +10,6 @@ import com.dan.bank.user.core.events.UserRemovedEvent;
 import com.dan.bank.user.core.events.UserUpdatedEvent;
 import com.dan.bank.user.core.models.Account;
 import com.dan.bank.user.core.models.User;
-import lombok.NoArgsConstructor;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
@@ -34,15 +33,15 @@ public class UserAggregate {
     }
 
     @CommandHandler
-    public UserAggregate(final RegisterUserCommand registerUserCommand) {
+    public UserAggregate(final RegisterUserCommand command) {
         passwordEncoder = new DefaultPasswordEncoder();
-        final User newUser = registerUserCommand.getUser();
+        final User newUser = command.getUser();
 
-        newUser.setId(registerUserCommand.getId());
+        newUser.setId(command.getId());
         securePassword(newUser.getAccount());
 
         final UserRegisteredEvent userRegisteredEvent = UserRegisteredEvent.builder()
-                .id(registerUserCommand.getId())
+                .id(command.getId())
                 .user(newUser)
                 .build();
 
@@ -50,9 +49,9 @@ public class UserAggregate {
     }
 
     @CommandHandler
-    public void handle(final UpdateUserCommand updateUserCommand) {
-        final User updatedUser = updateUserCommand.getUser();
-        updatedUser.setId(updateUserCommand.getId());
+    public void handle(final UpdateUserCommand command) {
+        final User updatedUser = command.getUser();
+        updatedUser.setId(command.getId());
         securePassword(updatedUser.getAccount());
 
         final UserUpdatedEvent userUpdatedEvent = UserUpdatedEvent.builder()
@@ -64,26 +63,26 @@ public class UserAggregate {
     }
 
     @CommandHandler
-    public void handle(final RemoveUserCommand removeUserCommand) {
+    public void handle(final RemoveUserCommand command) {
         final UserRemovedEvent userRemovedEvent = new UserRemovedEvent();
-        userRemovedEvent.setId(removeUserCommand.getId());
+        userRemovedEvent.setId(command.getId());
 
         AggregateLifecycle.apply(userRemovedEvent);
     }
 
     @EventSourcingHandler
-    public void on(final UserRegisteredEvent userRegisteredEvent) {
-        this.id = userRegisteredEvent.getId();
-        this.user = userRegisteredEvent.getUser();
+    public void on(final UserRegisteredEvent event) {
+        this.id = event.getId();
+        this.user = event.getUser();
     }
 
     @EventSourcingHandler
-    public void on(final UserUpdatedEvent userUpdatedEvent) {
-        this.user = userUpdatedEvent.getUser();
+    public void on(final UserUpdatedEvent event) {
+        this.user = event.getUser();
     }
 
     @EventSourcingHandler
-    public void on(final UserRemovedEvent userRemovedEvent) {
+    public void on(final UserRemovedEvent event) {
         AggregateLifecycle.markDeleted();
     }
 
