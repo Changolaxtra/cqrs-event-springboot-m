@@ -10,6 +10,7 @@ import com.dan.bank.user.core.events.UserRemovedEvent;
 import com.dan.bank.user.core.events.UserUpdatedEvent;
 import com.dan.bank.user.core.models.Account;
 import com.dan.bank.user.core.models.User;
+import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
@@ -20,6 +21,7 @@ import java.util.UUID;
 
 
 @Aggregate
+@Slf4j
 public class UserAggregate {
 
     @AggregateIdentifier
@@ -45,6 +47,7 @@ public class UserAggregate {
                 .user(newUser)
                 .build();
 
+        log.info("Dispatching event {}:{}", userRegisteredEvent.getClass().getSimpleName(), command.getId());
         AggregateLifecycle.apply(userRegisteredEvent);
     }
 
@@ -59,6 +62,7 @@ public class UserAggregate {
                 .user(updatedUser)
                 .build();
 
+        log.info("Dispatching event {}:{}", userUpdatedEvent.getClass().getSimpleName(), command.getId());
         AggregateLifecycle.apply(userUpdatedEvent);
     }
 
@@ -67,6 +71,7 @@ public class UserAggregate {
         final UserRemovedEvent userRemovedEvent = new UserRemovedEvent();
         userRemovedEvent.setId(command.getId());
 
+        log.info("Dispatching event {}:{}", userRemovedEvent.getClass().getSimpleName(), command.getId());
         AggregateLifecycle.apply(userRemovedEvent);
     }
 
