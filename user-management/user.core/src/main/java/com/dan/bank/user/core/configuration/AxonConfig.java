@@ -12,9 +12,11 @@ import org.axonframework.extensions.mongo.eventsourcing.eventstore.MongoEventSto
 import org.axonframework.extensions.mongo.eventsourcing.tokenstore.MongoTokenStore;
 import org.axonframework.metrics.GlobalMetricRegistry;
 import org.axonframework.serialization.Serializer;
+import org.axonframework.serialization.xml.XStreamSerializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 
 @Configuration
@@ -39,9 +41,11 @@ public class AxonConfig {
     }
 
     @Bean
-    public EventStorageEngine eventStorageEngine(final MongoTemplate axonMongoTemplate){
+    public EventStorageEngine eventStorageEngine(final MongoTemplate axonMongoTemplate,
+                                                 final Serializer defaultSerializer){
         return MongoEventStorageEngine.builder()
                 .mongoTemplate(axonMongoTemplate)
+                .eventSerializer(defaultSerializer)
                 .build();
     }
 
@@ -53,12 +57,14 @@ public class AxonConfig {
                 .messageMonitor(metricRegistry.registerEventBus("eventStore"))
                 .build();
     }
-
     @Bean
-    public XStream xStream() {
+    @Primary
+    public Serializer defaultSerializer() {
         final XStream xStream = new XStream();
         xStream.allowTypesByWildcard(new String[] { "com.dan.bank.**" });
-        return xStream;
+        return XStreamSerializer.builder()
+                .xStream(xStream)
+                .build();
     }
 
 }
