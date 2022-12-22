@@ -11,3 +11,17 @@ spring:
 axon:
   axonserver:
     servers: ${DOCKER_IP:192.168.59.100}
+
+initial:
+  user:
+    id: 0
+    firstName: John
+    lastName: Doe
+    email: john.doe@example.com
+    account:
+      username: admin
+      password: admin
+      roles:
+        - READ_PRIVILEGE
+        - WRITE_PRIVILEGE
+
