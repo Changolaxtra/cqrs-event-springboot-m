@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 @ProcessingGroup("user-group")
 @AllArgsConstructor
 @Slf4j
-public class DefaultUserEventHandler implements UserEventHandler {
+public class DbUserEventHandler implements UserEventHandler {
 
     private final UserRepository userRepository;
 
