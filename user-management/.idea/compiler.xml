@@ -8,11 +8,13 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="user.core" />
-        <module name="user.oauth2" />
         <module name="user.query.api" />
         <module name="user.cmd.api" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="user.oauth2" target="11" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">

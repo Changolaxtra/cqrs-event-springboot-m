@@ -3,8 +3,8 @@ package com.dan.bank.user.cmd.api.aggregates;
 import com.dan.bank.user.cmd.api.commands.RegisterUserCommand;
 import com.dan.bank.user.cmd.api.commands.RemoveUserCommand;
 import com.dan.bank.user.cmd.api.commands.UpdateUserCommand;
-import com.dan.bank.user.cmd.api.security.DefaultPasswordEncoder;
-import com.dan.bank.user.cmd.api.security.PasswordEncoder;
+import com.dan.bank.user.core.security.DefaultPasswordEncoder;
+import com.dan.bank.user.core.security.InternalPasswordEncoder;
 import com.dan.bank.user.core.events.UserRegisteredEvent;
 import com.dan.bank.user.core.events.UserRemovedEvent;
 import com.dan.bank.user.core.events.UserUpdatedEvent;
@@ -28,15 +28,15 @@ public class UserAggregate {
     private String id;
     private User user;
 
-    private final PasswordEncoder passwordEncoder;
+    private final InternalPasswordEncoder internalPasswordEncoder;
 
     public UserAggregate(){
-        passwordEncoder = new DefaultPasswordEncoder();
+        internalPasswordEncoder = new DefaultPasswordEncoder();
     }
 
     @CommandHandler
     public UserAggregate(final RegisterUserCommand command) {
-        passwordEncoder = new DefaultPasswordEncoder();
+        internalPasswordEncoder = new DefaultPasswordEncoder();
         final User newUser = command.getUser();
 
         newUser.setId(command.getId());
@@ -96,7 +96,7 @@ public class UserAggregate {
 
     private void securePassword(final Account account){
         final String password = account.getPassword();
-        final String hashedPassword = passwordEncoder.hashPassword(password);
+        final String hashedPassword = internalPasswordEncoder.hashPassword(password);
         account.setPassword(hashedPassword);
     }
 
