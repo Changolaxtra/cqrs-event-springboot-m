@@ -18,7 +18,7 @@ import java.util.UUID;
 @Slf4j
 @AllArgsConstructor
 @RestController
-@RequestMapping(path = "/api/v1/user")
+@RequestMapping(path = "/command/api/v1/user")
 public class UserController {
 
     private final CommandGateway commandGateway;

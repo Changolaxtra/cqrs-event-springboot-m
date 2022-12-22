@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @AllArgsConstructor
 @RestController
-@RequestMapping(path = "/api/v1/user")
+@RequestMapping(path = "/query/api/v1/user")
 public class UserLookupController {
 
     private final QueryGateway queryGateway;

@@ -20,6 +20,7 @@
         <module>user.core</module>
         <module>user.cmd.api</module>
         <module>user.query.api</module>
+        <module>api-gateway</module>
     </modules>
 
 </project>
