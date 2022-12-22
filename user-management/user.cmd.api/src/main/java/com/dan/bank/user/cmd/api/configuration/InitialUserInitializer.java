@@ -8,6 +8,8 @@ import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 
 @Slf4j
 @Component
@@ -26,6 +28,7 @@ public class InitialUserInitializer implements CommandLineRunner {
         try {
             log.info("Creating initial user...");
             final RegisterUserCommand command = new RegisterUserCommand();
+            user.setId(UUID.randomUUID().toString());
             command.setId(user.getId());
             command.setUser(user);
             commandGateway.sendAndWait(command);
