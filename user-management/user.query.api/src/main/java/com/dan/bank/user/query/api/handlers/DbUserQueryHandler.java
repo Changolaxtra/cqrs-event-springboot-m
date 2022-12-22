@@ -12,7 +12,6 @@ import org.axonframework.queryhandling.QueryHandler;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -25,23 +24,26 @@ public class DbUserQueryHandler implements UserQueryHandler {
     @Override
     @QueryHandler
     public UserLookupResponse getUserById(final FindUserByIdQuery query) {
+        log.info("Looking for user with id: {}", query.getId());
         final List<User> users = new ArrayList<>();
         userRepository.findById(query.getId())
                 .ifPresent(users::add);
-        return new UserLookupResponse(Collections.unmodifiableList(users));
+        return new UserLookupResponse(new ArrayList<>(users));
     }
 
     @Override
     @QueryHandler
     public UserLookupResponse searchUsers(final SearchUsersQuery query) {
+        log.info("Looking for users with filter: {}", query.getFilter());
         final List<User> users = userRepository.findByFilterRegex(query.getFilter());
-        return new UserLookupResponse(Collections.unmodifiableList(users));
+        return new UserLookupResponse(new ArrayList<>(users));
     }
 
     @Override
     @QueryHandler
     public UserLookupResponse getAllUsers(final FindAllUsersQuery query) {
+        log.info("Looking for all users");
         final List<User> users = userRepository.findAll();
-        return new UserLookupResponse(Collections.unmodifiableList(users));
+        return new UserLookupResponse(new ArrayList<>(users));
     }
 }

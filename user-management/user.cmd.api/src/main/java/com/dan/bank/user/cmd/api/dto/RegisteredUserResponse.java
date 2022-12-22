@@ -1,5 +1,6 @@
 package com.dan.bank.user.cmd.api.dto;
 
+import com.dan.bank.user.core.dto.BaseResponse;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

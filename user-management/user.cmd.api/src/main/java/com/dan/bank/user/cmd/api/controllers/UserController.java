@@ -3,7 +3,7 @@ package com.dan.bank.user.cmd.api.controllers;
 import com.dan.bank.user.cmd.api.commands.RegisterUserCommand;
 import com.dan.bank.user.cmd.api.commands.RemoveUserCommand;
 import com.dan.bank.user.cmd.api.commands.UpdateUserCommand;
-import com.dan.bank.user.cmd.api.dto.BaseResponse;
+import com.dan.bank.user.core.dto.BaseResponse;
 import com.dan.bank.user.cmd.api.dto.RegisteredUserResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.UUID;
 
+@Slf4j
 @AllArgsConstructor
 @RestController
 @RequestMapping(path = "/api/v1/user")
-@Slf4j
 public class UserController {
 
     private final CommandGateway commandGateway;

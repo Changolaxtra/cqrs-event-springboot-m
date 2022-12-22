@@ -10,11 +10,6 @@ import java.util.List;
 @Repository
 public interface UserRepository extends MongoRepository<User, String> {
 
-    @Query("{'$or' : [" +
-            "{'firstName': {$regex : ?0, $options: '1'}}, " +
-            "{'lastName': {$regex : ?0, $options: '1'}}, " +
-            "{'email': {$regex : ?0, $options: '1'}}, " +
-            "{'account.username': {$regex : ?0, $options: '1'}}" +
-            "]}")
+    @Query("{'$or' : [{'firstName': {$regex : ?0, $options: 'i'}}, {'lastName': {$regex : ?0, $options: 'i'}}, {'email': {$regex : ?0, $options: 'i'}}, {'account.username': {$regex : ?0, $options: 'i'}}]}")
     List<User> findByFilterRegex(String filter);
 }
